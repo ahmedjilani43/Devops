@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  backend:
+    image: ahmedjilani1/achat-backend:1.0.0
+    ports:
+      - "8089:8089"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/achatdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=
+    depends_on:
+      - mysql
+
+  frontend:
+    image: ahmedjilani1/achat-frontend:1.0.0
+    ports:
+      - "80:80"
+
+  sonarqube:
+    image: sonarqube
+    ports:
+      - "9000:9000"
+      - "9092:9092"
+    volumes:
+      - 'SonarQube_data:/opt/sonarqube/data'
+      - 'SonarQube_extensions:/opt/sonarqube/extensions'
+      - 'SonarQube_logs:/opt/sonarqube/logs'
+
+  mysql:
+    image: mysql:5.7
+    environment:
+      MYSQL_DATABASE: achatdb
+      MYSQL_ROOT_PASSWORD:
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+networks:
+  my-network:
+
+volumes:
+  mysql-data:
+  SonarQube_data:
+  SonarQube_extensions:
+  SonarQube_logs:
