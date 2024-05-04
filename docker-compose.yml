@@ -4,7 +4,6 @@ services:
     image: sonarqube
     ports:
       - "9000:9000"
-      - "9092:9092"
     volumes:
       - 'SonarQube_data:/opt/SonarQube/data'
       - 'SonarQube_extensions:/opt/SonarQube/extensions'
@@ -12,7 +11,7 @@ services:
   nexus:
     image: sonatype/nexus3
     ports:
-      - "8081:8081"
+      - "8082:8081"
     volumes:
       - 'nexus-data:/nexus-data'
 volumes:
